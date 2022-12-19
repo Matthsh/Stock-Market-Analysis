@@ -3,7 +3,7 @@
   <li>Crie o ambiente conda: conda create --name Stock</li><br/>
   <h3>sempre que for usar o projeto ative o ambiente criado:</h3>
   <li>Ative o ambiente conda: conda activate Stock</li>
-  <li>Para rodar o script Stock_grab são necessárias as seguintes bibliotecas:</li>
+  <li>Para rodar o script "Stock_grab.py" são necessárias as seguintes bibliotecas:</li>
   <ul>
     <li>&nbsp;pytz: pip install pytz</li>
     <li>&nbsp;pandas: pip install pandas</li>
