@@ -1,13 +1,5 @@
 import pandas as pd
-
-import matplotlib.pyplot as plt
-import seaborn as sns
-sns.set_style('whitegrid')
-plt.style.use("fivethirtyeight")
-
-from pandas_datareader.data import DataReader
 import yfinance as yf
-
 from datetime import datetime
 
 
