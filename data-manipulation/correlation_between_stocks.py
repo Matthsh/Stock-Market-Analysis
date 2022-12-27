@@ -22,18 +22,32 @@
 # significa que não há correlação entre as variáveis.
 
 import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
 
-# Lê os dados do arquivo CSV e armazena em um DataFrame
-stocks_df = pd.read_csv("./data/Stocks.csv")
+# Lê o arquivo CSV usando o método read_csv do pandas
+df = pd.read_csv('./data/Stocks.csv', index_col='Date', parse_dates=True)
 
-# Seleciona as colunas de interesse
-tech_stocks_df = stocks_df[['Date', 'Adj Close']].copy()
+# Selecione a coluna 'Adj Close' do DataFrame
+closing_prices = df['Adj Close']
 
-# Renomeia as colunas para facilitar o acesso posterior
-tech_stocks_df.columns = ['date', 'adj_close']
+tech_rets = pd.DataFrame()
 
-# Calcula as variações percentuais dos preços de fechamento ajustados
-tech_stocks_df.loc[:, 'return'] = tech_stocks_df['adj_close'].pct_change()
+# Calcule os retornos diários usando o método pct_change do pandas
+tech_rets['daily_return'] = closing_prices.pct_change()
 
-# Exibe os primeiros registros do DataFrame
-tech_stocks_df.head()
+# Adicione a coluna 'company_name' ao DataFrame de retornos diários
+tech_rets['company_name'] = df['company_name']
+
+
+# Crie um novo DataFrame usando o método pivot_table
+pivoted_rets = pd.pivot_table(tech_rets, index='Date', columns='company_name', values='daily_return')
+
+pivoted_rets = pivoted_rets.drop(pivoted_rets.index[0])
+
+# Exibe os primeiros valores do novo DataFrame
+print(pivoted_rets.head())
+
+sns.jointplot(x='GOOGLE', y='APPLE', data=pivoted_rets, kind='scatter', color='seagreen')
+
+plt.show()
