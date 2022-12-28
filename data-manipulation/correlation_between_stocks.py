@@ -48,6 +48,20 @@ pivoted_rets = pivoted_rets.drop(pivoted_rets.index[0])
 # Exibe os primeiros valores do novo DataFrame
 print(pivoted_rets.head())
 
-sns.jointplot(x='GOOGLE', y='APPLE', data=pivoted_rets, kind='scatter', color='seagreen')
+sns.pairplot(pivoted_rets, kind='reg')
 
+# Set up our figure by naming it returns_fig, call PairPLot on the DataFrame
+return_fig = sns.PairGrid(pivoted_rets)
+
+# Using map_upper we can specify what the upper triangle will look like.
+return_fig.map_upper(plt.scatter, color='purple')
+
+# We can also define the lower triangle in the figure, inclufing the plot type (kde) 
+# or the color map (BluePurple)
+return_fig.map_lower(sns.kdeplot, cmap='cool_d')
+
+# Finally we'll define the diagonal as a series of histogram plots of the daily return
+return_fig.map_diag(plt.hist, bins=30)
+
+plt.show()
 plt.show()
