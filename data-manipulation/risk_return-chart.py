@@ -29,14 +29,27 @@ import matplotlib.pyplot as plt
 # Lê o arquivo CSV usando o método read_csv do pandas
 df = pd.read_csv('./data/Stocks.csv', index_col='Date', parse_dates=True)
 
+# Selecione a coluna 'Adj Close' do DataFrame
+closing_prices = df['Adj Close']
+
+tech_rets = pd.DataFrame()
+
+# Calcule os retornos diários usando o método pct_change do pandas
+tech_rets['closing_prices'] = closing_prices
+tech_rets['daily_return'] = closing_prices.pct_change()
+
+# Adicione a coluna 'company_name' ao DataFrame de retornos diários
+tech_rets['company_name'] = df['company_name']
+
+
 # Crie um novo DataFrame usando o método pivot_table
 tech_rets = pd.pivot_table(df, index='Date', columns='company_name', values='Adj Close')
 
-# Calcule os retornos diários usando o método pct_change do pandas
-rets = tech_rets.pct_change()
-
 # Remova os valores ausentes
 rets = tech_rets.dropna()
+
+# Calcule os retornos diários usando o método pct_change do pandas
+rets = tech_rets.pct_change()
 
 area = np.pi * 20
 

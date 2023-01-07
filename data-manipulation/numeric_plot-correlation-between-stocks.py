@@ -26,7 +26,6 @@ tech_rets = pd.pivot_table(tech_rets, index='Date', columns='company_name', valu
 tech_rets = tech_rets.drop(tech_rets.index[0])
 
 
-
 plt.figure(figsize=(12, 10))
 
 plt.subplot(2, 2, 1)
